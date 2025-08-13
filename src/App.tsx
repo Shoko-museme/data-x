@@ -3,6 +3,7 @@ import { NavBar } from './components/NavBar'
 import { DashboardV2 } from './components/DashboardV2'
 import { EntriesTable } from './components/EntriesTable'
 import { MapsPage } from './components/MapsPage'
+import { FactoryMapEditor } from './components/FactoryMapEditor'
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('overview')
@@ -23,6 +24,8 @@ export default function App() {
             </div>
           </main>
         )
+      case 'map-editor':
+        return <FactoryMapEditor />
       case 'overview':
       default:
         return <DashboardV2 />

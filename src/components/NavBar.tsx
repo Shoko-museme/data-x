@@ -50,6 +50,13 @@ export function NavBar({ currentPage, onPageChange }: NavBarProps) {
             >
               Projects
             </Button>
+            <Button 
+               variant={currentPage === 'map-editor' ? 'default' : 'ghost'} 
+               size="sm" 
+               onClick={() => onPageChange('map-editor')}
+             >
+               Map&nbsp;Editor
+             </Button>
             <Button variant="ghost" size="sm">Analytics</Button>
             <Button variant="ghost" size="sm">Reports</Button>
           </div>

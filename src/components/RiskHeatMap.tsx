@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { MapPin, Info } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/card'
 import { Separator } from './ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { ResponsiveContainer, LineChart as RechartsLineChart, Line, XAxis, YAxis, Tooltip, PieChart as RechartsPieChart, Pie, Cell, Legend } from 'recharts'
+import { factoryAreas } from '../data/factoryAreas'
+import type { FactoryArea } from '../types/factoryArea'
 
-const factoryAreas = [
+// [Legacy] 数据已迁移到 src/data/factoryAreas.ts
+const _factoryAreasLegacy = [
   { 
     id: 1, name: '1号车间', x: 15, y: 20, width: 25, height: 20, 
     riskLevel: 'high', 
@@ -52,7 +55,11 @@ const getRiskColor = (riskLevel: string) => {
   }
 }
 
-function AreaDetailPanel({ area }: { area: typeof factoryAreas[0] }) {
+interface AreaDetailPanelProps {
+  area: FactoryArea;
+}
+
+function AreaDetailPanel({ area }: AreaDetailPanelProps) {
     const [activeTab, setActiveTab] = useState('trend');
     const [timeRange, setTimeRange] = useState('day');
     
@@ -82,19 +89,19 @@ function AreaDetailPanel({ area }: { area: typeof factoryAreas[0] }) {
 
     return (
         <div className="pt-4 animate-in fade-in-50 duration-500">
-            <h3 className="text-lg font-bold mb-4">{area.name} - 详细分析</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-sm">
+            <h3 className="text-xl font-bold mb-4">{area.name} - 详细分析</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-base">
                 <div className="bg-muted/50 p-3 rounded-lg text-center">
                     <div className="text-muted-foreground">风险评分</div>
-                    <div className="text-2xl font-bold">{area.summary.riskScore}</div>
+                    <div className="text-3xl font-bold">{area.summary.riskScore}</div>
                 </div>
                 <div className="bg-muted/50 p-3 rounded-lg text-center">
                     <div className="text-muted-foreground">实时报警</div>
-                    <div className="text-2xl font-bold">{area.summary.activeAlerts}</div>
+                    <div className="text-3xl font-bold">{area.summary.activeAlerts}</div>
                 </div>
                 <div className="bg-muted/50 p-3 rounded-lg text-center">
                     <div className="text-muted-foreground">区域温度</div>
-                    <div className="text-2xl font-bold">{area.summary.temperature}</div>
+                    <div className="text-3xl font-bold">{area.summary.temperature}</div>
                 </div>
             </div>
             
@@ -140,24 +147,37 @@ function AreaDetailPanel({ area }: { area: typeof factoryAreas[0] }) {
     )
 }
 
-export function RiskHeatMap() {
+interface RiskHeatMapProps {
+  highlightedLocation: string;
+}
+
+export function RiskHeatMap({ highlightedLocation }: RiskHeatMapProps) {
   const [selectedAreaId, setSelectedAreaId] = useState<number | null>(1)
+
+  useEffect(() => {
+    if (highlightedLocation) {
+      const area = factoryAreas.find(a => a.name === highlightedLocation);
+      if (area) {
+        setSelectedAreaId(area.id);
+      }
+    }
+  }, [highlightedLocation]);
 
   const selectedArea = factoryAreas.find(a => a.id === selectedAreaId);
 
   return (
     <Card className="h-full flex flex-col">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <MapPin className="h-5 w-5 text-red-600" />
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <MapPin className="h-6 w-6 text-red-600" />
           工厂风险热力图
         </CardTitle>
-         <CardDescription>
+         <CardDescription className="text-base">
             点击地图区域查看下方的详细风险分析数据
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col min-h-0">
-        <div className="relative bg-gray-50 rounded-lg overflow-hidden flex-shrink-0 h-48">
+        <div className="relative bg-gray-50 rounded-lg overflow-hidden flex-shrink-0 h-64">
             <svg viewBox="0 0 100 85" className="w-full h-full">
               {factoryAreas.map((area) => (
                   <g key={area.id} onClick={() => setSelectedAreaId(area.id)} className="cursor-pointer">
@@ -191,9 +211,9 @@ export function RiskHeatMap() {
             </>
         ) : (
             <div className="flex flex-col items-center justify-center flex-1 text-center text-muted-foreground p-8">
-                <Info className="h-10 w-10 mb-2" />
-                <h3 className="text-md font-semibold">请选择一个区域</h3>
-                <p className="text-xs">点击上方地图上的任意区域以查看详情。</p>
+                <Info className="h-12 w-12 mb-2" />
+                <h3 className="text-lg font-semibold">请选择一个区域</h3>
+                <p className="text-sm">点击上方地图上的任意区域以查看详情。</p>
             </div>
         )}
       </CardContent>

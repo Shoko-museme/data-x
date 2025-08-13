@@ -105,11 +105,11 @@ function EventItem({ event, onLocationClick }: { event: (typeof events)[0]; onLo
     <div className="group relative flex items-start gap-x-3 p-2 rounded-lg hover:bg-accent transition-colors">
       <div className="absolute left-5.5 top-7 h-full w-px bg-muted/60" aria-hidden="true" />
       
-      <div className={`relative flex h-7 w-7 flex-none items-center justify-center rounded-full ${config.bgColor}`}>
-        <Icon className={`h-4 w-4 ${config.color}`} />
+      <div className={`relative flex h-8 w-8 flex-none items-center justify-center rounded-full ${config.bgColor}`}>
+        <Icon className={`h-5 w-5 ${config.color}`} />
       </div>
 
-      <div className="flex-auto py-0.5 text-xs leading-5">
+      <div className="flex-auto py-0.5 text-sm leading-6">
         <div className="flex items-center justify-between">
           <span className="font-medium text-foreground">{event.title}</span>
           <time className="flex-none text-muted-foreground">
@@ -121,19 +121,19 @@ function EventItem({ event, onLocationClick }: { event: (typeof events)[0]; onLo
         
         <div className="mt-2 flex items-center justify-between">
             <div className="flex items-center gap-x-2">
-                 <Badge variant="outline" className={`text-xs ${config.badgeClass} ${config.borderColor} border`}>
+                 <Badge variant="outline" className={`text-sm ${config.badgeClass} ${config.borderColor} border`}>
                     {config.label}
                  </Badge>
                  <button onClick={() => onLocationClick?.(event.location)} className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
-                     <MapPin className="h-3 w-3" />
+                     <MapPin className="h-4 w-4" />
                      {event.location}
                  </button>
             </div>
             <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-x-2">
-                 <Button variant="ghost" size="sm" className="h-7 px-2 text-xs">
+                 <Button variant="ghost" size="sm" className="h-8 px-3 text-sm">
                     详情
                  </Button>
-                 <Button variant="ghost" size="sm" className="h-7 px-2 text-xs">
+                 <Button variant="ghost" size="sm" className="h-8 px-3 text-sm">
                     处理
                  </Button>
             </div>
@@ -147,8 +147,8 @@ export function RealTimeEventStream({ onLocationClick }: RealTimeEventStreamProp
   return (
     <Card className="h-full flex flex-col">
       <CardHeader className="pb-4">
-        <CardTitle className="flex items-center gap-2 text-base">
-          <div className="h-2.5 w-2.5 bg-red-500 rounded-full animate-pulse"></div>
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <div className="h-3 w-3 bg-red-500 rounded-full animate-pulse"></div>
           实时安全事件流
         </CardTitle>
       </CardHeader>

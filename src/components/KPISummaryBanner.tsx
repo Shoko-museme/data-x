@@ -68,7 +68,7 @@ export function KPISummaryBanner() {
                 <div>
                   <div className="flex items-start justify-between">
                     <div className={`p-3 rounded-lg ${kpi.bgColor}`}>
-                      <Icon className={`h-6 w-6 ${kpi.color}`} />
+                      <Icon className={`h-8 w-8 ${kpi.color}`} />
                     </div>
                     {kpi.status === 'excellent' && (
                       <Badge variant="outline" className="border-green-600/50 bg-green-50 text-green-700">
@@ -76,7 +76,7 @@ export function KPISummaryBanner() {
                       </Badge>
                     )}
                   </div>
-                  <h3 className="text-sm font-medium text-muted-foreground pt-4">
+                  <h3 className="text-base font-medium text-muted-foreground pt-4">
                     {kpi.title}
                   </h3>
                 </div>
@@ -85,9 +85,9 @@ export function KPISummaryBanner() {
                 <div className="flex-grow">
                   {kpi.value && (
                     <div className="flex items-baseline gap-1.5">
-                      <span className="text-3xl font-bold tracking-tight">{kpi.value}</span>
+                      <span className="text-4xl font-bold tracking-tight">{kpi.value}</span>
                       {kpi.unit && (
-                        <span className="text-sm text-muted-foreground">{kpi.unit}</span>
+                        <span className="text-base text-muted-foreground">{kpi.unit}</span>
                       )}
                     </div>
                   )}
@@ -95,10 +95,10 @@ export function KPISummaryBanner() {
                   {kpi.details && (
                     <div className="space-y-2 pt-1">
                       {kpi.details.map((detail, idx) => (
-                        <div key={idx} className="flex items-center justify-between text-sm">
+                        <div key={idx} className="flex items-center justify-between text-base">
                           <span className="text-muted-foreground">{detail.label}</span>
                           {'color' in detail ? (
-                            <Badge variant="secondary" className={`text-xs font-semibold ${detail.color}`}>
+                            <Badge variant="secondary" className={`text-sm font-semibold ${detail.color}`}>
                               {detail.value}
                             </Badge>
                           ) : (
@@ -117,7 +117,7 @@ export function KPISummaryBanner() {
                 
                 {/* Bottom Section: Description */}
                 {kpi.description && (
-                  <p className="text-xs text-muted-foreground pt-2">
+                  <p className="text-sm text-muted-foreground pt-2">
                     {kpi.description}
                   </p>
                 )}

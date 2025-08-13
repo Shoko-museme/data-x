@@ -3,6 +3,7 @@ import { KPISummaryBanner } from './KPISummaryBanner'
 import { RealTimeEventStream } from './RealTimeEventStream'
 import { FocusAreaMonitoring } from './FocusAreaMonitoring'
 import { RiskHeatMap } from './RiskHeatMap'
+import { AIPatrolPanel } from './AIPatrolPanel'
 
 export function DashboardV2() {
   const [highlightedLocation, setHighlightedLocation] = useState<string>('')
@@ -19,16 +20,16 @@ export function DashboardV2() {
       <KPISummaryBanner />
       
       {/* Four Quadrant Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-h-[600px]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-h-[800px]">
         {/* Left Column */}
         <div className="space-y-6">
           {/* Top Left - Real-time Event Stream */}
-          <div className="h-80">
+          <div className="h-[420px]">
             <RealTimeEventStream onLocationClick={handleLocationClick} />
           </div>
           
           {/* Bottom Left - Focus Area Monitoring */}
-          <div className="flex-1">
+          <div className="h-[388px]">
             <FocusAreaMonitoring />
           </div>
         </div>
@@ -38,6 +39,9 @@ export function DashboardV2() {
           <RiskHeatMap highlightedLocation={highlightedLocation} />
         </div>
       </div>
+
+      {/* AI Patrol Panel - Floating */}
+      <AIPatrolPanel />
     </main>
   )
 }
