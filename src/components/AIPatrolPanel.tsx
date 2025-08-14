@@ -7,7 +7,7 @@ import type { AIPatrolData } from '@/types/patrol'
 
 const aiPatrolData: AIPatrolData = {
   lastPatrol: '14:30',
-  patrolArea: '1号生产线',
+  patrolArea: '1#生产线',
   mainFindings: 2,
   findings: [
     '叉车超速行驶',

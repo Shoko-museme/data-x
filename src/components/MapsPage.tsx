@@ -3,10 +3,16 @@ import { MapSelector } from './maps/MapSelector'
 import { FloorSelector } from './maps/FloorSelector'
 import { AreaInfoPanel } from './maps/AreaInfoPanel'
 import { MapView } from './maps/MapView'
+import { MapEditor } from './maps/MapEditor'
 
-export function MapsPage() {
+interface MapsPageProps {
+  initialEdit?: boolean;
+}
+
+export function MapsPage({ initialEdit = false }: MapsPageProps) {
   const [currentMap, setCurrentMap] = useState('building-a')
   const [currentFloor, setCurrentFloor] = useState('1f')
+  const [isEditing, setIsEditing] = useState(initialEdit);
 
   const mapNames: { [key: string]: string } = {
     'building-a': '第一轧钢车间',
@@ -18,23 +24,29 @@ export function MapsPage() {
 
   return (
     <main className="relative h-[calc(100vh-4rem)] w-full bg-background">
-      {/* Main Map View */}
-      <MapView currentMap={currentMap} currentFloor={currentFloor} />
-      
-      {/* Floating Components */}
-      <MapSelector 
-        currentMap={currentMap} 
-        onMapChange={setCurrentMap} 
-      />
-      
-      <FloorSelector 
-        currentFloor={currentFloor} 
-        onFloorChange={setCurrentFloor} 
-      />
-      
-      <AreaInfoPanel 
-        currentArea={`${currentMapName} - ${currentFloor.toUpperCase()}`} 
-      />
+      {isEditing ? (
+        <MapEditor />
+      ) : (
+        <>
+          {/* Main Map View */}
+          <MapView currentMap={currentMap} currentFloor={currentFloor} />
+          
+          {/* Floating Components */}
+          <MapSelector 
+            currentMap={currentMap} 
+            onMapChange={setCurrentMap} 
+          />
+          
+          <FloorSelector 
+            currentFloor={currentFloor} 
+            onFloorChange={setCurrentFloor} 
+          />
+          
+          <AreaInfoPanel 
+            currentArea={`${currentMapName} - ${currentFloor.toUpperCase()}`} 
+          />
+        </>
+      )}
     </main>
   )
 }

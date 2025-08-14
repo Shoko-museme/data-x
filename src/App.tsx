@@ -3,15 +3,16 @@ import { NavBar } from './components/NavBar'
 import { DashboardV2 } from './components/DashboardV2'
 import { EntriesTable } from './components/EntriesTable'
 import { MapsPage } from './components/MapsPage'
-import { FactoryMapEditor } from './components/FactoryMapEditor'
 
-export default function App() {
+function App() {
   const [currentPage, setCurrentPage] = useState('overview')
 
   const renderPage = () => {
     switch (currentPage) {
       case 'maps':
         return <MapsPage />
+      case 'map-editor':
+        return <MapsPage initialEdit={true} />
       case 'projects':
         return (
           <main className="container mx-auto px-6 py-8">
@@ -24,8 +25,6 @@ export default function App() {
             </div>
           </main>
         )
-      case 'map-editor':
-        return <FactoryMapEditor />
       case 'overview':
       default:
         return <DashboardV2 />
@@ -39,3 +38,5 @@ export default function App() {
     </div>
   )
 }
+
+export default App

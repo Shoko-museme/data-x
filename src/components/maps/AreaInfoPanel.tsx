@@ -9,19 +9,19 @@ interface AreaInfoPanelProps {
 }
 
 const dangerousTasks = [
-  { id: 1, task: '高空作业', location: 'A区龙门吊', status: '进行中', time: '09:00' },
-  { id: 2, task: '动火作业', location: 'B区切割站', status: '已结束', time: '10:30' },
+  { id: 1, task: '高空作业', location: '预精轧行车', status: '进行中', time: '09:00' },
+  { id: 2, task: '动火作业', location: '加热炉底', status: '已结束', time: '10:30' },
 ]
 
 const recentEvents = [
-  { id: 1, type: '设备报警', message: '3号轧钢机温度过高', severity: '紧急', time: '11:15' },
-  { id: 2, type: '人员闯入', message: '成品区A发现未授权人员', severity: '重要', time: '11:05' },
+  { id: 1, type: '设备报警', message: '1#液压站温度异常', severity: '紧急', time: '11:15' },
+  { id: 2, type: '人员闯入', message: '加热炉底发现未授权人员', severity: '重要', time: '11:05' },
 ]
 
 const deviceStatus = [
-    { name: '摄像头', status: 'ok', value: '198/200' },
-    { name: 'PLC控制器', status: 'ok', value: '48/50' },
-    { name: '传感器', status: 'warning', value: '77/83' },
+    { name: '摄像头', status: 'ok', value: '11/11' },
+    { name: 'PLC', status: 'ok', value: '4/4' },
+    { name: '传感器', status: 'warning', value: '1/2' },
 ]
 
 
@@ -52,7 +52,7 @@ export function AreaInfoPanel({ currentArea }: AreaInfoPanelProps) {
   }
 
   return (
-    <Card className="absolute top-4 right-4 z-10 w-80 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/60 border shadow-lg">
+    <Card className="absolute top-1/2 right-4 -translate-y-1/2 z-10 w-80 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/60 border shadow-lg">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base font-semibold">
           <Info className="h-5 w-5" />

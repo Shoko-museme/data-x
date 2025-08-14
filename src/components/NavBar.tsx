@@ -1,4 +1,4 @@
-import { Search, Plus, Bell, Settings, LogOut, User } from 'lucide-react'
+import { Search, Bell, Settings, LogOut, User } from 'lucide-react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
+import logo from '../assets/logo.png'
 
 interface NavBarProps {
   currentPage: string
@@ -22,10 +23,8 @@ export function NavBar({ currentPage, onPageChange }: NavBarProps) {
         {/* Logo and Navigation Links */}
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-medium">D</span>
-            </div>
-            <span className="font-medium">Dashboard</span>
+            <img src={logo} alt="Logo" className="h-8 w-8" />
+            <span className="font-medium">智能安全监控系统</span>
           </div>
           
           <div className="hidden md:flex items-center gap-4">
@@ -34,31 +33,22 @@ export function NavBar({ currentPage, onPageChange }: NavBarProps) {
               size="sm"
               onClick={() => onPageChange('overview')}
             >
-              Overview
+              仪表盘
             </Button>
             <Button 
               variant={currentPage === 'maps' ? 'default' : 'ghost'} 
               size="sm"
               onClick={() => onPageChange('maps')}
             >
-              Maps
+              地图
             </Button>
             <Button 
               variant={currentPage === 'projects' ? 'default' : 'ghost'} 
               size="sm"
               onClick={() => onPageChange('projects')}
             >
-              Projects
+              安全台账
             </Button>
-            <Button 
-               variant={currentPage === 'map-editor' ? 'default' : 'ghost'} 
-               size="sm" 
-               onClick={() => onPageChange('map-editor')}
-             >
-               Map&nbsp;Editor
-             </Button>
-            <Button variant="ghost" size="sm">Analytics</Button>
-            <Button variant="ghost" size="sm">Reports</Button>
           </div>
         </div>
 
@@ -69,15 +59,9 @@ export function NavBar({ currentPage, onPageChange }: NavBarProps) {
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder="Search projects..."
-              className="w-64 pl-10 border-0"
+              className="w-64 pl-10 bg-gray-100 rounded-md border-gray-300"
             />
           </div>
-
-          {/* New Project Button */}
-          <Button size="sm" className="gap-2">
-            <Plus className="h-4 w-4" />
-            <span className="hidden sm:inline">New Project</span>
-          </Button>
 
           {/* Notifications */}
           <Button variant="ghost" size="sm">

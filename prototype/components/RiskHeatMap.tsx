@@ -8,9 +8,9 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 // Mock factory areas with risk levels
 const factoryAreas = [
-  { id: 1, name: '1号车间', x: 15, y: 20, width: 25, height: 20, riskLevel: 'high', alerts: 3, temp: '28°C' },
-  { id: 2, name: '2号车间', x: 45, y: 20, width: 25, height: 20, riskLevel: 'medium', alerts: 1, temp: '24°C' },
-  { id: 3, name: '3号车间', x: 75, y: 20, width: 20, height: 20, riskLevel: 'low', alerts: 0, temp: '22°C' },
+  { id: 1, name: '第一轧钢车间', x: 15, y: 20, width: 25, height: 20, riskLevel: 'high', alerts: 3, temp: '28°C' },
+  { id: 2, name: '第二轧钢车间', x: 45, y: 20, width: 25, height: 20, riskLevel: 'medium', alerts: 1, temp: '24°C' },
+  { id: 3, name: '第三轧钢车间车间', x: 75, y: 20, width: 20, height: 20, riskLevel: 'low', alerts: 0, temp: '22°C' },
   { id: 4, name: '储罐区', x: 15, y: 50, width: 20, height: 15, riskLevel: 'critical', alerts: 5, temp: '32°C' },
   { id: 5, name: '装卸区', x: 40, y: 50, width: 30, height: 15, riskLevel: 'medium', alerts: 2, temp: '26°C' },
   { id: 6, name: '办公区', x: 75, y: 50, width: 20, height: 15, riskLevel: 'low', alerts: 0, temp: '23°C' },

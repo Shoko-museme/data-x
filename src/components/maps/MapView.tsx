@@ -1,84 +1,89 @@
 
-import React from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Stage, Layer, Group } from 'react-konva';
+import type { MapData, Device as DeviceType } from '../../types/map';
+import { Shape, Device } from './MapObjects';
+import { Grid } from './Grid';
+import { DeviceDetailPanel } from './DeviceDetailPanel';
 
 interface MapViewProps {
   currentMap: string;
   currentFloor: string;
 }
 
+const LOCAL_STORAGE_KEY = 'map-editor-data';
+
 export function MapView({ currentMap, currentFloor }: MapViewProps) {
-  const SvgMap = () => (
-    <svg width="100%" height="100%" viewBox="0 0 1200 800" className="bg-gray-100 dark:bg-gray-800 rounded-lg">
-      <defs>
-        <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-          <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(200,200,200,0.2)" strokeWidth="1"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#grid)" />
+  const [mapData, setMapData] = useState<MapData | null>(null);
+  const [selectedDevice, setSelectedDevice] = useState<DeviceType | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState({ width: 0, height: 0 });
 
-      {/* Main workshop area */}
-      <rect x="50" y="100" width="1100" height="600" fill="#E2E8F0" stroke="#A0AEC0" strokeWidth="2" />
-      <text x="600" y="420" fontFamily="Verdana" fontSize="30" textAnchor="middle" fill="#666">
-        第一轧钢车间 - 1F
-      </text>
+  useEffect(() => {
+    const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (savedData) {
+      try {
+        setMapData(JSON.parse(savedData));
+      } catch (e) {
+        console.error("Failed to load map data", e);
+      }
+    } else {
+        setMapData(null);
+    }
+    setSelectedDevice(null); // Reset selection when map changes
+  }, [currentMap, currentFloor]); 
 
-      {/* Different zones */}
-      <rect x="70" y="120" width="300" height="560" fill="#F0F4F8" />
-      <text x="220" y="400" textAnchor="middle" fill="#333">原料区</text>
+  useEffect(() => {
+    const checkSize = () => {
+        if (containerRef.current) {
+            setSize({
+                width: containerRef.current.offsetWidth,
+                height: containerRef.current.offsetHeight,
+            });
+        }
+    };
+    checkSize();
+    window.addEventListener('resize', checkSize);
+    return () => window.removeEventListener('resize', checkSize);
+  }, []);
 
-      <rect x="390" y="120" width="400" height="560" fill="#E6EBF2" />
-      <text x="590" y="400" textAnchor="middle" fill="#333">轧钢区</text>
-      
-      <rect x="810" y="120" width="320" height="270" fill="#F0F4F8" />
-      <text x="970" y="265" textAnchor="middle" fill="#333">成品区 A</text>
+  const offsetX = mapData ? (size.width - mapData.width) / 2 : 0;
+  const offsetY = mapData ? (size.height - mapData.height) / 2 : 0;
 
-      <rect x="810" y="410" width="320" height="270" fill="#F0F4F8" />
-      <text x="970" y="555" textAnchor="middle" fill="#333">成品区 B</text>
+  const handleSelectDevice = (device: DeviceType) => {
+    setSelectedDevice(device);
+  };
 
-      {/* Conveyor belts */}
-      <path d="M 370 380 L 390 380" stroke="#6B7280" strokeWidth="4" strokeDasharray="8 4" />
-      <path d="M 790 250 L 810 250" stroke="#6B7280" strokeWidth="4" strokeDasharray="8 4" />
-      <path d="M 790 540 L 810 540" stroke="#6B7280" strokeWidth="4" strokeDasharray="8 4" />
-
-      {/* Camera Icons */}
-      <g transform="translate(100, 150)" className="cursor-pointer">
-        <circle cx="0" cy="0" r="12" fill="#3B82F6" />
-        <path d="M -5 -3 L 0 3 L 5 -3 Z" fill="white" />
-        <title>摄像头 01</title>
-      </g>
-      <g transform="translate(600, 150)" className="cursor-pointer">
-        <circle cx="0" cy="0" r="12" fill="#3B82F6" />
-        <path d="M -5 -3 L 0 3 L 5 -3 Z" fill="white" />
-        <title>摄像头 02</title>
-      </g>
-      <g transform="translate(1000, 150)" className="cursor-pointer">
-        <circle cx="0" cy="0" r="12" fill="#3B82F6" />
-        <path d="M -5 -3 L 0 3 L 5 -3 Z" fill="white" />
-        <title>摄像头 03</title>
-      </g>
-       <g transform="translate(100, 650)" className="cursor-pointer">
-        <circle cx="0" cy="0" r="12" fill="#3B82F6" />
-        <path d="M -5 -3 L 0 3 L 5 -3 Z" fill="white" />
-        <title>摄像头 04</title>
-      </g>
-      <g transform="translate(600, 650)" className="cursor-pointer">
-        <circle cx="0" cy="0" r="12" fill="#EF4444" />
-        <path d="M -5 -3 L 0 3 L 5 -3 Z" fill="white" />
-        <title>摄像头 05 (异常)</title>
-      </g>
-
-      {/* Alert Icon */}
-      <g transform="translate(900, 500)" className="cursor-pointer">
-        <path d="M -15 15 L 0 -15 L 15 15 Z" fill="#FBBF24" stroke="#D97706" strokeWidth="2" />
-        <text x="0" y="5" textAnchor="middle" fill="white" fontSize="20">!</text>
-        <title>设备异常: 3号轧钢机</title>
-      </g>
-    </svg>
-  );
+  const handleClosePanel = () => {
+    setSelectedDevice(null);
+  };
 
   return (
-    <div className="absolute inset-0 z-0">
-      <SvgMap />
+    <div ref={containerRef} className="absolute inset-0 z-0">
+      {mapData && size.width > 0 ? (
+        <Stage width={size.width} height={size.height}>
+            <Grid width={size.width} height={size.height} gridSize={40} />
+            <Layer>
+                <Group x={offsetX} y={offsetY}>
+                {mapData.shapes.map((shape) => (
+                    <Shape key={shape.id} shape={shape} />
+                ))}
+                {mapData.devices.map(device => (
+                    <Device key={device.id} device={device} onActivate={handleSelectDevice} />
+                ))}
+                </Group>
+            </Layer>
+        </Stage>
+      ) : (
+        <div className="flex items-center justify-center h-full">
+            <p className="text-xl text-gray-500">
+                {!mapData ? "没有找到地图数据。请先进入编辑模式创建地图。" : "正在加载地图..."}
+            </p>
+        </div>
+      )}
+      {selectedDevice && (
+        <DeviceDetailPanel device={selectedDevice} onClose={handleClosePanel} />
+      )}
     </div>
   );
 }

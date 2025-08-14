@@ -47,7 +47,8 @@ const kpiData = [
     title: '设备状态',
     details: [
       { label: '摄像头', value: '198/200', status: 'online' },
-      { label: 'PLC', value: '48/50', status: 'online' }
+      { label: 'PLC', value: '48/50', status: 'online' },
+      { label: '传感器', value: '30/38', status: 'offline' }
     ],
     icon: Activity,
     color: 'text-blue-600',

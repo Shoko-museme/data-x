@@ -8,7 +8,7 @@ const hazardousOperations = [
   {
     id: 1,
     name: '高空作业检修',
-    location: '2号车间屋顶',
+    location: '第二轧钢车间屋顶',
     timeSlot: '09:00-17:00',
     status: 'in-progress',
     workers: 3,
@@ -36,7 +36,7 @@ const hazardousOperations = [
 
 const aiPatrolData = {
   lastPatrol: '14:30',
-  patrolArea: '1号生产线',
+  patrolArea: '1#动力房',
   mainFindings: 2,
   findings: [
     '叉车超速行驶',

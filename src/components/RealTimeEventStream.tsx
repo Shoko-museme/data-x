@@ -9,7 +9,7 @@ const events = [
     level: 'emergency',
     type: 'fire',
     title: '火焰烟雾',
-    location: '2号车间-A区',
+    location: '第二轧钢车间-A区',
     time: '14:32:05',
     icon: Flame,
     description: '检测到异常高温和烟雾信号'
@@ -22,14 +22,14 @@ const events = [
     location: '北侧围墙-C11摄像头',
     time: '14:31:50',
     icon: UserX,
-    description: '非授权人员进入限制区域'
+    description: '未授权人员进入危险区域'
   },
   {
     id: 3,
     level: 'warning',
     type: 'equipment',
     title: '设备异常',
-    location: '3号生产线-传感器02',
+    location: '第三轧钢车间生产线-传感器02',
     time: '14:30:15',
     icon: Zap,
     description: '温度传感器读数超出正常范围'
@@ -39,7 +39,7 @@ const events = [
     level: 'info',
     type: 'maintenance',
     title: '维护提醒',
-    location: '1号车间-设备维护',
+    location: '第一轧钢车间-设备维护',
     time: '14:28:30',
     icon: Clock,
     description: '定期维护检查即将到期'

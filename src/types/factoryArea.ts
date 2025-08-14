@@ -20,6 +20,7 @@ export interface RectArea extends FactoryAreaBase {
   y: number
   width: number
   height: number
+  rotation?: number
 }
 
 export interface PolygonArea extends FactoryAreaBase {

@@ -15,7 +15,7 @@ const hazardousOperations = [
   {
     id: 1,
     name: '高空作业检修',
-    location: '2号车间屋顶',
+    location: '第二轧钢车间屋顶',
     timeSlot: '09:00-17:00',
     status: 'in-progress',
     workers: 3,
